@@ -25,4 +25,3 @@ class GetAllRestaurantsTest(APITestCase):
         serializer = RestaurantSerializer(restaurants, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
