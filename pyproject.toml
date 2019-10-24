@@ -21,4 +21,6 @@ django = "^2.2"
 djangorestframework = "^3.10"
 psycopg2 = "^2.8"
 django-environ = "^0.4.5"
+djangorestframework-yaml = "^1.0.3"
+djangorestframework-xml = "^1.4.0"
 
