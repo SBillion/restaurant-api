@@ -19,4 +19,6 @@ keywords = ['packaging', 'poetry']
 python = "^3.6"
 django = "^2.2"
 djangorestframework = "^3.10"
+psycopg2 = "^2.8"
+django-environ = "^0.4.5"
 
