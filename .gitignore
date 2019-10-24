@@ -10,3 +10,7 @@ htmlcov/
 *,cover
 nosetests.xml
 coverage.xml
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
