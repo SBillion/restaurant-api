@@ -1,6 +1,7 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+from rest_framework.utils import json
 
 from ..models import Restaurant
 from ..serializers import RestaurantSerializer
@@ -46,3 +47,30 @@ class GetRestaurantDetailTest(APITestCase):
             reverse("restaurant_detail", kwargs={"pk": 600})
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+class CreateRestaurantTest(APITestCase):
+    """ Test module for inserting a new puppy """
+
+    def setUp(self):
+        self.valid_payload = {
+            'name': 'Super restaurant',
+        }
+        self.invalid_payload = {
+            'name': '',
+        }
+
+    def test_create_valid_restaurant(self):
+        response = self.client.post(
+            reverse('restaurants'),
+            data=json.dumps(self.valid_payload),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid_restaurant(self):
+        response = self.client.post(
+            reverse('restaurants'),
+            data=json.dumps(self.invalid_payload),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
