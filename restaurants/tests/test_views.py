@@ -1,5 +1,6 @@
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.test import APITestCase
 from rest_framework.utils import json
 
@@ -34,7 +35,7 @@ class GetRestaurantDetailTest(APITestCase):
         self.toto_pizza = Restaurant.objects.create(name="Toto Pizza")
         self.tontons = Restaurant.objects.create(name="Les tontons")
 
-    def test_get_valid_restaurant(self) -> None:
+    def test_get_valid(self) -> None:
         response = self.client.get(
             reverse("restaurant_detail", kwargs={"pk": self.funky_burger.pk})
         )
@@ -42,24 +43,25 @@ class GetRestaurantDetailTest(APITestCase):
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_get_invalid_restaurant(self) -> None:
+    def test_get_invalid(self) -> None:
         response = self.client.get(
             reverse("restaurant_detail", kwargs={"pk": 600})
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 class CreateRestaurantTest(APITestCase):
-    """ Test module for inserting a new puppy """
+    """ Test for restaurant POST view"""
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.valid_payload = {
             'name': 'Super restaurant',
         }
         self.invalid_payload = {
             'name': '',
+            'blurp':'blirp'
         }
 
-    def test_create_valid_restaurant(self):
+    def test_create_valid(self) -> None:
         response = self.client.post(
             reverse('restaurants'),
             data=json.dumps(self.valid_payload),
@@ -67,10 +69,61 @@ class CreateRestaurantTest(APITestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_create_invalid_restaurant(self):
+    def test_create_invalid(self) -> None:
         response = self.client.post(
             reverse('restaurants'),
             data=json.dumps(self.invalid_payload),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+class UpdateRestaurantTest(APITestCase):
+    """ Test for restaurant PUT view """
+
+    def setUp(self) -> None:
+        self.toto_pizza = Restaurant.objects.create(name="Toto Pizza")
+        self.valid_payload = {
+            'name': 'Super restaurant',
+        }
+        self.invalid_payload = {
+            'name': '',
+            'blablabla':'plop'
+        }
+
+    def test_valid_update(self) -> None:
+        response = self.client.put(
+            reverse('restaurant_detail', kwargs={'pk': self.toto_pizza.pk}),
+            data=json.dumps(self.valid_payload),
+            content_type='application/json'
+        )
+        self.toto_pizza.refresh_from_db()
+        serializer = RestaurantSerializer(self.toto_pizza)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
+
+
+    def test_invalid_update(self) -> None:
+        response = self.client.put(
+            reverse('restaurant_detail', kwargs={'pk': self.toto_pizza.pk}),
+            data=json.dumps(self.invalid_payload),
+            content_type='application/json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteRestaurantTest(APITestCase):
+    """ Test for restaurant DELETE """
+
+    def setUp(self):
+        self.funky_burger = Restaurant.objects.create(name="Funky burger")
+        self.toto_pizza = Restaurant.objects.create(name="Toto Pizza")
+        self.tontons = Restaurant.objects.create(name="Les tontons")
+
+    def test_valid_delete_puppy(self):
+        response = self.client.delete(
+            reverse('restaurant_detail', kwargs={'pk': self.funky_burger.pk}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_invalid_delete_puppy(self):
+        response = self.client.delete(
+            reverse('restaurant_detail', kwargs={'pk': 30}))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
