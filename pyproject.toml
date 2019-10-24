@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "restaurant-api"
+version = "0.1.0"
+description = "The description of the package"
+
+license = "MIT"
+
+authors = [
+    "Sébastien Billion <sebastien.billion@gmail.com>"
+]
+
+readme = 'README.md' 
+
+repository = "https://github.com/SBillion/restaurant-api"
+
+keywords = ['packaging', 'poetry']
+
+[tool.poetry.dependencies]
+python = "^3.6"
+django = "^2.2"
+
