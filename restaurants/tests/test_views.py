@@ -37,6 +37,10 @@ class GetRestaurantListTest(APITestCase):
         serializer_seconde_page = RestaurantSerializer(restaurants[10:], many=True)
         self.assertEqual(response.data.get("results"), serializer_seconde_page.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response = self.client.get(reverse("restaurant-list"), {'page_size' : 50})
+        serializer_all = RestaurantSerializer(restaurants, many=True)
+        self.assertEqual(response.data.get("results"), serializer_all.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 class GetRestaurantDetailTest(APITestCase):
     def setUp(self) -> None:
