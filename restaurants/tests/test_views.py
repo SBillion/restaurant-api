@@ -1,7 +1,5 @@
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.exceptions import ValidationError
-from rest_framework.parsers import JSONParser
 from rest_framework.test import APITestCase
 from rest_framework.utils import json
 
