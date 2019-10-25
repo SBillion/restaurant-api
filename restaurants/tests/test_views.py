@@ -21,14 +21,22 @@ class GetRestaurantListTest(APITestCase):
         Restaurant.objects.create(name="Flocon de sel ")
         Restaurant.objects.create(name="Les cèdres")
         Restaurant.objects.create(name="Les tontons")
+        Restaurant.objects.create(name="Les nouveaux sauvages")
+        Restaurant.objects.create(name="La plume")
+        Restaurant.objects.create(name="La mauvaise herbe")
+        Restaurant.objects.create(name="Les tchoutchous")
+        Restaurant.objects.create(name="La ratatouiulle")
 
-    def test_get_all_restaurants(self) -> None:
+    def test_get_all_restaurants_paginated(self) -> None:
         response = self.client.get(reverse("restaurant-list"))
         restaurants = Restaurant.objects.all()
-        serializer = RestaurantSerializer(restaurants, many=True)
-        self.assertEqual(response.data, serializer.data)
+        serializer_first_page = RestaurantSerializer(restaurants[:10], many=True)
+        self.assertEqual(response.data.get("results"), serializer_first_page.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
+        response = self.client.get(reverse("restaurant-list"), {'page' : 2})
+        serializer_seconde_page = RestaurantSerializer(restaurants[10:], many=True)
+        self.assertEqual(response.data.get("results"), serializer_seconde_page.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 class GetRestaurantDetailTest(APITestCase):
     def setUp(self) -> None:
