@@ -17,7 +17,7 @@ class Restaurant(models.Model):
         """
         This method can be really slow on big table
         """
-        return cls.objects.order_by('?').first()
+        return cls.objects.order_by("?").first()
 
     @classmethod
     def get_random_faster(cls) -> object:

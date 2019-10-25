@@ -12,7 +12,7 @@ class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
     lookup_field = "name"
-    page_size_query_param = 'page_size'
+    page_size_query_param = "page_size"
 
     @action(detail=False)
     def random(self, request) -> Response:

@@ -23,7 +23,7 @@ from restaurants.views import RestaurantViewSet
 favicon_view = RedirectView.as_view(url="/static/images/favicon.ico", permanent=True)
 
 router = DefaultRouter()
-router.register(r'restaurants', RestaurantViewSet)
+router.register(r"restaurants", RestaurantViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

@@ -33,14 +33,15 @@ class GetRestaurantListTest(APITestCase):
         serializer_first_page = RestaurantSerializer(restaurants[:10], many=True)
         self.assertEqual(response.data.get("results"), serializer_first_page.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        response = self.client.get(reverse("restaurant-list"), {'page' : 2})
+        response = self.client.get(reverse("restaurant-list"), {"page": 2})
         serializer_seconde_page = RestaurantSerializer(restaurants[10:], many=True)
         self.assertEqual(response.data.get("results"), serializer_seconde_page.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        response = self.client.get(reverse("restaurant-list"), {'page_size' : 50})
+        response = self.client.get(reverse("restaurant-list"), {"page_size": 50})
         serializer_all = RestaurantSerializer(restaurants, many=True)
         self.assertEqual(response.data.get("results"), serializer_all.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
 class GetRestaurantDetailTest(APITestCase):
     def setUp(self) -> None:
@@ -57,7 +58,9 @@ class GetRestaurantDetailTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_invalid(self) -> None:
-        response = self.client.get(reverse("restaurant-detail", kwargs={"name": 'Wrong name'}))
+        response = self.client.get(
+            reverse("restaurant-detail", kwargs={"name": "Wrong name"})
+        )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
@@ -128,7 +131,9 @@ class DeleteRestaurantTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_invalid_delete(self) -> None:
-        response = self.client.delete(reverse("restaurant-detail", kwargs={"name": 'Wrong name'}))
+        response = self.client.delete(
+            reverse("restaurant-detail", kwargs={"name": "Wrong name"})
+        )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
