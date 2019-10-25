@@ -1,8 +1,8 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
-from restaurants import views
+from restaurants.views import RestaurantViewSet
 
-urlpatterns = [
-    path("", views.RestaurantList.as_view(), name="restaurants"),
-    path("<int:pk>/", views.RestaurantDetail.as_view(), name="restaurant_detail"),
-]
+router = DefaultRouter()
+router.register(r'restaurants', RestaurantViewSet)
+urlpatterns = router.urls
