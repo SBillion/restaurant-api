@@ -11,6 +11,7 @@ from restaurants.serializers import RestaurantSerializer
 class RestaurantViewSet(ModelViewSet):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantSerializer
+    lookup_field = "name"
 
     @action(detail=False)
     def random(self, request) -> Response:

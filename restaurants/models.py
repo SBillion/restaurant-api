@@ -13,12 +13,17 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=255)
 
     @classmethod
-    def get_random(cls):
+    def get_random(cls) -> object:
+        """
+        This method can be really slow on big table
+        """
         return cls.objects.order_by('?').first()
 
     @classmethod
-    def get_random_faster(cls):
-        """ This method to get a random object is faster if there is not a lot of delete"""
+    def get_random_faster(cls) -> object:
+        """
+        This method to get a random object is faster but get slower if there is a lot of deletion.
+        """
         max_id = cls.objects.all().aggregate(max_id=Max("id"))["max_id"]
         while True:
             pk = random.randint(1, max_id)

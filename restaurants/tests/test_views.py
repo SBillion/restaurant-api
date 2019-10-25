@@ -38,14 +38,14 @@ class GetRestaurantDetailTest(APITestCase):
 
     def test_get_valid(self) -> None:
         response = self.client.get(
-            reverse("restaurant-detail", kwargs={"pk": self.funky_burger.pk})
+            reverse("restaurant-detail", kwargs={"name": self.funky_burger.name})
         )
         serializer = RestaurantSerializer(self.funky_burger)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_invalid(self) -> None:
-        response = self.client.get(reverse("restaurant-detail", kwargs={"pk": 600}))
+        response = self.client.get(reverse("restaurant-detail", kwargs={"name": 'Wrong name'}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
@@ -83,7 +83,7 @@ class UpdateRestaurantTest(APITestCase):
 
     def test_valid_update(self) -> None:
         response = self.client.put(
-            reverse("restaurant-detail", kwargs={"pk": self.toto_pizza.pk}),
+            reverse("restaurant-detail", kwargs={"name": self.toto_pizza.name}),
             data=json.dumps(self.valid_payload),
             content_type="application/json",
         )
@@ -94,7 +94,7 @@ class UpdateRestaurantTest(APITestCase):
 
     def test_invalid_update(self) -> None:
         response = self.client.put(
-            reverse("restaurant-detail", kwargs={"pk": self.toto_pizza.pk}),
+            reverse("restaurant-detail", kwargs={"name": self.toto_pizza.name}),
             data=json.dumps(self.invalid_payload),
             content_type="application/json",
         )
@@ -111,12 +111,12 @@ class DeleteRestaurantTest(APITestCase):
 
     def test_valid_delete(self) -> None:
         response = self.client.delete(
-            reverse("restaurant-detail", kwargs={"pk": self.funky_burger.pk})
+            reverse("restaurant-detail", kwargs={"name": self.funky_burger.name})
         )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_invalid_delete(self) -> None:
-        response = self.client.delete(reverse("restaurant-detail", kwargs={"pk": 30}))
+        response = self.client.delete(reverse("restaurant-detail", kwargs={"name": 'Wrong name'}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
