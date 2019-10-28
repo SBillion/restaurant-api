@@ -1,4 +1,8 @@
+[![CircleCI](https://circleci.com/gh/SBillion/restaurant-api/tree/develop.svg?style=svg)](https://circleci.com/gh/SBillion/restaurant-api/tree/develop)
+
 # Restaurant API
+
+
 
 ## Install
 
