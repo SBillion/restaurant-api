@@ -49,10 +49,12 @@ python application.py tests
 
 ## What next ?
 
+ - Use docker to distribute easily with other developers
  - Add user and authentication to restrict usage of non readable endpoint
  - Add an API key system ?
  - Generate Swagger UI or ReDoc documentation using OpenAPI
- - Use docker to distribute easily with other developers
+ - Use tox
+ - Deployment on a Saas platform or a private server if the tests passed
 
 
 
