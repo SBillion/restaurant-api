@@ -1,0 +1,18 @@
+.env
+
+# Pycharm IDE
+.idea/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+*,cover
+nosetests.xml
+coverage.xml
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]

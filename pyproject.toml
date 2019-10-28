@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "restaurant-api"
+version = "0.1.0"
+description = "The description of the package"
+
+authors = [
+    "Sébastien Billion <sebastien.billion@gmail.com>"
+]
+
+readme = 'README.md' 
+
+repository = "https://github.com/SBillion/restaurant-api"
+
+keywords = ['packaging', 'poetry']
+
+[tool.poetry.dependencies]
+python = "^3.6"
+django = "^2.2"
+djangorestframework = "^3.10"
+psycopg2 = "^2.8"
+django-environ = "^0.4.5"
+djangorestframework-yaml = "^1.0.3"
+djangorestframework-xml = "^1.4.0"
+
+[tool.poetry.dev-dependencies]
+coverage = "^4.5.4"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

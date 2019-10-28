@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:  # required for runs that don't use workflows
+    working_directory: ~/restaurant-api
+    docker:
+      - image: circleci/python:3.6.8
+      - image: circleci/postgres:9.6.2
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: restaurant_api_test
+          DATABASE_URL: postgres://circleci:@localhost:5432/restaurant_api_test
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps-{{ checksum "poetry.lock" }}
+      - run:
+          name: Install Dependencies
+          command: |
+            poetry run pip install -r requirements.txt
+      - save_cache:
+          key: deps-{{ checksum "poetry.lock" }}
+          paths:
+            - /home/circleci/.cache/pypoetry/virtualenvs
+
+      - run:
+          name: Run tests, report coverage
+          command: |
+            poetry run coverage run --source="." manage.py test
+            poetry run coverage report
+            poetry run coverage html
+            poetry run python manage.py test
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: tr1
