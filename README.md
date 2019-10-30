@@ -36,6 +36,15 @@ After creating your [virtualenv](https://virtualenv.pypa.io/en/latest/userguide/
 pip install -r requirements.txt
 ```
 
+## Docker
+
+Justo do 
+
+```shell script
+docker-compose up
+```
+
+
 ### Lauch application
 
 In the projet root and with your virtualenv activate
@@ -53,7 +62,6 @@ python application.py tests
 
 ## What next ?
 
- - Use docker to distribute easily with other developers
  - Add user and authentication to restrict usage of non readable endpoint
  - Add an API key system ?
  - Generate Swagger UI or ReDoc documentation using OpenAPI

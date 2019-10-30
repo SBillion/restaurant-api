@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/restaurant-api
     docker:
       - image: circleci/python:3.6.8
-      - image: circleci/postgres:latest
+      - image: circleci/postgres:10.1
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: restaurant_api_test

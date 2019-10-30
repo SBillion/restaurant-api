@@ -5,23 +5,23 @@ ENV PYTHONDONTWRITEBYTECODE 1
 #prevent buffering stdout and stderr
 ENV PYTHONUNBUFFERED 1
 
-# Copy project
-COPY . /code/
+
+
 
 # Set work directory
+RUN mkdir /code
 WORKDIR /code
 
-
+COPY requirements.txt ./
 
 # Upgrade pip
 RUN pip install pip --upgrade
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install poetry
-RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
 
-# Install porject dependencies
-RUN /root/.poetry/bin/poetry self:update --preview
-RUN /root/.poetry/bin/poetry install
+
+# Copy project
+COPY . .
 
 
 
