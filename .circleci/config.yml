@@ -8,7 +8,7 @@ jobs:
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: restaurant_api_test
-          DATABASE_URL: postgres://circleci:@localhost:5432/restaurant_api_test
+          POSTGRES_PASSWORD: circleci
     steps:
       - checkout
       - restore_cache:
