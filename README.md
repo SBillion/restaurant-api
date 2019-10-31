@@ -13,7 +13,9 @@ have to create a **.env.** file at root project with following env variables def
  ```dotenv
     DEBUG=True
     SECRET_KEY=put_your_secret_key_here
-    DATABASE_URL=postgres://<username>:<password>@localhost:5432/<dbname>
+    POSTGRES_USER=username
+    POSTGRES_PASSWORD=password
+    POSTGRES_DB=dbname
 ``` 
 
 ### Database
