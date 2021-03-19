@@ -16,7 +16,7 @@ keywords = ['packaging', 'poetry']
 [tool.poetry.dependencies]
 python = "^3.6"
 django = "^2.2"
-djangorestframework = "^3.10"
+djangorestframework = "^3.11"
 psycopg2 = "^2.8"
 django-environ = "^0.4.5"
 djangorestframework-yaml = "^1.0.3"
